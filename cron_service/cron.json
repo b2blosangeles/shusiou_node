@@ -1,0 +1,3 @@
+[
+	{"id":"_cron_whoami.js","schedule":"1 * * * * *", "script":"cron_whoami.js"}
+]
