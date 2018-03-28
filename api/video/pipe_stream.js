@@ -34,11 +34,12 @@ function cache_request(url, fn, cbk) {
 	});
 }
 
-let source_file = req.query['video_fn'],
+let environment = (req.query['env']) ? ('_' + req.query['env']) : '', 
+    source_file = req.query['video_fn'],
     space_id = 'shusiou-d-01',
     space_url = 'https://shusiou-d-01.nyc3.digitaloceanspaces.com', 
-    space_info = '/shusiou/' + source_file + '/_info.txt',
-    space_dir = '/shusiou/' + source_file + '/_t/',
+    space_info = '/shusiou' + environment + '/' + source_file + '/_info.txt',
+    space_dir = '/shusiou' + environment + '/' + source_file + '/_t/',
     cache_folder = '/var/shusiou_cache/' + source_file + '/',
     cache_info =  cache_folder + '_info.txt';
 
