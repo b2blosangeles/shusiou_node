@@ -56,7 +56,8 @@ if (isNaN(req.query['ss'])) {
 	return true;
 }
 
-let ss0 = parseFloat(req.query['ss']), 
+let environment = (req.query['env']) ? ('_' + req.query['env']) : '',
+    ss0 = parseFloat(req.query['ss']), 
     ss = Math.floor(ss0),
     d_s = ss - ss0,
     sec_s = Math.floor(parseInt(ss) / 5), 
@@ -70,7 +71,7 @@ let _w = parseFloat(req.query['size']),
 // TODO ffmpeg ratio
 
 let space = {
-	endpoint : 'https://shusiou-d-01.nyc3.digitaloceanspaces.com/shusiou/',
+	endpoint : 'https://shusiou-d-01.nyc3.digitaloceanspaces.com/shusiou' + environment + '/',
 	video:(req.query['video_fn']) ?  req.query['video_fn'] : 'video.mp4'
 }
 space.cache_folder =  '/var/shusiou_cache/' + space.video + '/';
