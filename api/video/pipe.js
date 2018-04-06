@@ -71,8 +71,8 @@ let _w = parseFloat(req.query['size']),
 // TODO ffmpeg ratio
 
 let space = {
-	endpoint : 'https://shusiou-d-01.nyc3.digitaloceanspaces.com/shusiou' + environment + '/',
-	video:(req.query['video_fn']) ?  req.query['video_fn'] : 'video.mp4'
+	endpoint : req.query['space'] + 'videos/',
+	video: req.query['video_fn']
 }
 space.cache_folder =  '/var/shusiou_cache/' + space.video + '/';
 
