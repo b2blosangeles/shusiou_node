@@ -151,7 +151,7 @@ _f['PULLING'] = function(cbk) {;
 		for (var i = 0; i < fn.length; i++) {
 			_f1['P_' + i] = (function(i) {
 				return function(cbk1) {
-					let url = space.endpoint 'videos/' +  space.video + '/_s/' + fn[i];
+					let url = space.endpoint + 'videos/' +  space.video + '/_s/' + fn[i];
 					cache_request(url, space.cache_folder + fn[i], cbk1);
 				}
 			})(i);	
