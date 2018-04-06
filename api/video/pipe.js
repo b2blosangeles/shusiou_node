@@ -73,7 +73,7 @@ let space = {
 	endpoint : req.query['space'] + 'videos/',
 	video: req.query['video_fn']
 }
-space.cache_folder =  '/var/shusiou_cache/' + space.endpoint.replace(/\//ig, '_') + / + space.video + '/';
+space.cache_folder =  '/var/shusiou_cache/' + space.endpoint.replace(/\//ig, '_') + '/' + space.video + '/';
 
 let CP = new pkg.crowdProcess();
 let _f = {}, fn = []; 
