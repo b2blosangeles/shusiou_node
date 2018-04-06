@@ -39,7 +39,7 @@ let environment = (req.query['env']) ? ('_' + req.query['env']) : '',
     space_url = req.query['space'], 
     space_info = 'videos/' + source_file + '/_info.txt',
     space_dir = 'videos/' + source_file + '/_t/',
-    cache_folder = '/var/shusiou_cache/' + source_file + '/',
+    cache_folder = '/var/shusiou_cache/' + space_url.replace(/\//ig, '_') + '/' + source_file + '/',
     cache_info =  cache_folder + '_info.txt';
 
 var CP = new pkg.crowdProcess();
