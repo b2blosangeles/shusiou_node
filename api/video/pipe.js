@@ -56,8 +56,7 @@ if (isNaN(req.query['ss'])) {
 	return true;
 }
 
-let environment = (req.query['env']) ? ('_' + req.query['env']) : '',
-    ss0 = parseFloat(req.query['ss']), 
+let ss0 = parseFloat(req.query['ss']), 
     ss = Math.floor(ss0),
     d_s = ss - ss0,
     sec_s = Math.floor(parseInt(ss) / 5), 
@@ -74,7 +73,7 @@ let space = {
 	endpoint : req.query['space'] + 'videos/',
 	video: req.query['video_fn']
 }
-space.cache_folder =  '/var/shusiou_cache/' + space.video + '/';
+space.cache_folder =  '/var/shusiou_cache/' + space.endpoint.replace(/\//ig, '_') + / + space.video + '/';
 
 let CP = new pkg.crowdProcess();
 let _f = {}, fn = []; 
