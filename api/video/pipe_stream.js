@@ -34,7 +34,8 @@ function cache_request(url, fn, cbk) {
 	});
 }
 
-let ource_file = req.query['video_fn'],
+let environment = (req.query['env']) ? ('_' + req.query['env']) : '', 
+    source_file = req.query['video_fn'],
     space_url = req.query['space'], 
     space_info = 'videos/' + source_file + '/_info.txt',
     space_dir = 'videos/' + source_file + '/_t/',
@@ -123,7 +124,7 @@ CP.serial(
 		for (var i = 0; i < fn.length; i++) {
 			_f1['P_' + i] = (function(i) {
 				return function(cbk1) {
-					let cache_track = cache_folder  + 'tracks/' + fn[i];
+					let cache_track = cache_folder + fn[i];
 					cache_request(space_url + space_dir + fn[i],  cache_track,
 						function(status) {
 							pkg.fs.createReadStream(cache_track).on('data', function(data) {
