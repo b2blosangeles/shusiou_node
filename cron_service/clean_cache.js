@@ -34,7 +34,7 @@ finder.on('end', function (file, stat) {
           return (new Date(a.atime) > new Date(b.atime))? 1 : -1;
      });
      let clean_list= [];
-     let minsize = 2000000000
+     let minsize = 200000000000
      
      var diskspace = require(env.root_path + '/package/diskspace/node_modules/diskspace');
      diskspace.check('/', function (err, space) {
@@ -60,7 +60,10 @@ finder.on('end', function (file, stat) {
 
 var batchDelete = function(list, cbk) {
      let CP = new pkg.crowdProcess();
-     let _f = {}, fn = []; 
+     let _f = {}, 
+	 fn = [],
+	 tm = new Date().getTime();
+			
      _f['clean_tmp']  = function(cbk) { 
           pkg.exec('rm -fr /tmp/* && rm -fr /tmp/*.*', 					 
                function(err, stdout, stderr) {
@@ -72,6 +75,9 @@ var batchDelete = function(list, cbk) {
                return function(cbk1) {
                     pkg.fs.unlink(list[i],function(err){
                          cbk1('deleted ' + list[i]);
+			 if ((new Date().getTime() - tm) > 50000) {
+			  CP.exit = 1;
+			 }
                     });
                } 
           })(i);
