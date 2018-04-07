@@ -48,7 +48,9 @@ _f['CREATE_DIR'] = function(cbk) {
 	var folderP = require(env.site_path + '/api/inc/folderP/folderP');
 	var fp = new folderP();		
 	fp.build(cache_folder, () => {
-		cbk(true)
+		fp.build(cache_folder + 'tracks/', () => {
+			cbk(true)
+		});		
 	});	
 };
 _f['VALIDATION'] = function(cbk) {
@@ -122,7 +124,7 @@ CP.serial(
 		for (var i = 0; i < fn.length; i++) {
 			_f1['P_' + i] = (function(i) {
 				return function(cbk1) {
-					let cache_track = cache_folder + fn[i];
+					let cache_track = cache_folder  + 'tracks/' + fn[i];
 					cache_request(space_url + space_dir + fn[i],  cache_track,
 						function(status) {
 							pkg.fs.createReadStream(cache_track).on('data', function(data) {
