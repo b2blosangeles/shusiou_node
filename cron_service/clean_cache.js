@@ -2,7 +2,7 @@
 
 var path = require('path');
 var env = {root_path:path.join(__dirname, '../../..')};
-env.site_path = env.root_path + '/site';
+env.sites_path = env.root_path + '/sites';
 env.config_path = '/var/qalet_config';
 
 var config = require(env.config_path + '/config.json');
@@ -12,6 +12,7 @@ let pkg = {
 	exec		: require('child_process').exec,
 	fs 		: require('fs')
 }; 
+console.log(env);
 var finder = require(env.sites_path + '/node/api/inc/findit/findit.js')('/var/shusiou_cache/');
 var path = require('path');
 let list = [];
