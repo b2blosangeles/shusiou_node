@@ -1,7 +1,7 @@
 /* ---  This cron is to clean video cache on video nodes.  */
 
 var path = require('path');
-var env = {root_path:path.join(__dirname, '../..')};
+var env = {root_path:path.join(__dirname, '../../..')};
 env.site_path = env.root_path + '/site';
 env.config_path = '/var/qalet_config';
 
