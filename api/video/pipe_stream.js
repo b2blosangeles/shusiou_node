@@ -29,17 +29,18 @@ function cache_request(url, fn, cbk) {
 			pkg.request(url, function (err1, response, body) {
 			}).pipe(file);			
 		} else {
-			cbk(true);
+			pkg.fs.utimes(fn, new Date(), stats.mtime, function() {
+				cbk(true);
+			});
 		}
 	});
 }
 
-let environment = (req.query['env']) ? ('_' + req.query['env']) : '', 
-    source_file = req.query['video_fn'],
+let source_file = req.query['video_fn'],
     space_url = req.query['space'], 
     space_info = 'videos/' + source_file + '/_info.txt',
     space_dir = 'videos/' + source_file + '/_t/',
-    cache_folder = '/var/shusiou_cache/' + source_file + '/',
+    cache_folder = '/var/shusiou_cache/' + space_url.replace('https://', '').replace(/\//ig, '_') + '/' + source_file + '/',
     cache_info =  cache_folder + '_info.txt';
 
 var CP = new pkg.crowdProcess();
@@ -48,7 +49,9 @@ _f['CREATE_DIR'] = function(cbk) {
 	var folderP = require(env.site_path + '/api/inc/folderP/folderP');
 	var fp = new folderP();		
 	fp.build(cache_folder, () => {
-		cbk(true)
+		fp.build(cache_folder + 'tracks/', () => {
+			cbk(true)
+		});		
 	});	
 };
 _f['VALIDATION'] = function(cbk) {
@@ -122,6 +125,17 @@ CP.serial(
 		for (var i = 0; i < fn.length; i++) {
 			_f1['P_' + i] = (function(i) {
 				return function(cbk1) {
+					let cache_track = cache_folder + 'tracks/' + fn[i];
+					cache_request(space_url + space_dir + fn[i],  cache_track,
+						function(status) {
+							pkg.fs.createReadStream(cache_track).on('data', function(data) {
+								a.write(Buffer.from(data));
+							}).on('end', function() {
+								cbk1(true);
+							});
+					});				
+				
+					/*
 					pkg.request(space_url + space_dir + fn[i], 
 					function (error, response, body) {})
 					.on('data', function(data) {
@@ -129,6 +143,7 @@ CP.serial(
 					}).on('end', function() {
 						cbk1(true);
 					});
+					*/
 				}
 			})(i);	
 		}

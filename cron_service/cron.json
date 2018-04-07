@@ -1,3 +1,4 @@
 [
-	{"id":"_cron_whoami.js","schedule":"1 * * * * *", "script":"cron_whoami.js"}
+	{"id":"_cron_whoami.js","schedule":"1 * * * * *", "script":"cron_whoami.js"},
+	{"id":"_clean_cache.js","schedule":"11 * * * * *", "script":"clean_cache.js"}
 ]

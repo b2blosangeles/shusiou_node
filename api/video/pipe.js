@@ -56,8 +56,7 @@ if (isNaN(req.query['ss'])) {
 	return true;
 }
 
-let environment = (req.query['env']) ? ('_' + req.query['env']) : '',
-    ss0 = parseFloat(req.query['ss']), 
+let ss0 = parseFloat(req.query['ss']), 
     ss = Math.floor(ss0),
     d_s = ss - ss0,
     sec_s = Math.floor(parseInt(ss) / 5), 
@@ -71,10 +70,11 @@ let _w = parseFloat(req.query['size']),
 // TODO ffmpeg ratio
 
 let space = {
-	endpoint : req.query['space'] + 'videos/',
+	endpoint : req.query['space'],
 	video: req.query['video_fn']
 }
-space.cache_folder =  '/var/shusiou_cache/' + space.video + '/';
+space.cache_folder =  '/var/shusiou_cache/' + space.endpoint.replace('https://', '').replace(/\//ig, '_') + 
+'/' + space.video + '/';
 
 let CP = new pkg.crowdProcess();
 let _f = {}, fn = []; 
@@ -92,7 +92,7 @@ _f['CREATE_DIR'] = function(cbk) {
 };
 
 _f['VALIDATION'] = function(cbk) {
-	let url = space.endpoint +  space.video + '/_info.txt';
+	let url = space.endpoint + 'videos/' +  space.video + '/_info.txt';
 	cache_request(url, space.cache_folder + '_info.txt', 
 		function(status) {
 			pkg.fs.readFile(space.cache_folder + '_info.txt', 'utf8', function(err, data) {	 
@@ -126,7 +126,7 @@ _f['VALIDATION'] = function(cbk) {
 
 _f['PULLING'] = function(cbk) {;
 	if (fn.length === 1) {
-		let url = space.endpoint +  space.video + '/_s/' + fn[0];
+		let url = space.endpoint + 'videos/' +  space.video + '/_s/' + fn[0];
 		cache_request(url, space.cache_folder + fn[0], cbk);
 	} else {
 		var CP1 = new pkg.crowdProcess();
@@ -152,7 +152,7 @@ _f['PULLING'] = function(cbk) {;
 		for (var i = 0; i < fn.length; i++) {
 			_f1['P_' + i] = (function(i) {
 				return function(cbk1) {
-					let url = space.endpoint +  space.video + '/_s/' + fn[i];
+					let url = space.endpoint + 'videos/' +  space.video + '/_s/' + fn[i];
 					cache_request(url, space.cache_folder + fn[i], cbk1);
 				}
 			})(i);	
