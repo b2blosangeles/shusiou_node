@@ -12,7 +12,7 @@ let pkg = {
 	exec		: require('child_process').exec,
 	fs 		: require('fs')
 }; 
-console.log(env);
+
 var finder = require(env.sites_path + '/node/api/inc/findit/findit.js')('/var/shusiou_cache/');
 var path = require('path');
 let list = [];
@@ -34,7 +34,7 @@ finder.on('end', function (file, stat) {
           return (new Date(a.atime) > new Date(b.atime))? 1 : -1;
      });
      let clean_list= [];
-     let minsize = 2000000000
+     let minsize = 200000000000
      
      var diskspace = require(env.root_path + '/package/diskspace/node_modules/diskspace');
      diskspace.check('/', function (err, space) {
