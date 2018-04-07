@@ -12,7 +12,7 @@ let pkg = {
 	exec		: require('child_process').exec,
 	fs 		: require('fs')
 }; 
-var finder = require(env.site_path + '/api/inc/findit/findit.js')('/var/shusiou_cache/');
+var finder = require(env.sites_path + '/node/api/inc/findit/findit.js')('/var/shusiou_cache/');
 var path = require('path');
 let list = [];
 finder.on('directory', function (dir, stat, stop) {
