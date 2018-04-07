@@ -29,7 +29,7 @@ function cache_request(url, fn, cbk) {
 			pkg.request(url, function (err1, response, body) {
 			}).pipe(file);			
 		} else {
-			pkg.fs.utimes(fn, new Date(), stat.mtime, function() {
+			pkg.fs.utimes(fn, new Date(), stats.mtime, function() {
 				cbk(true);
 			});
 		}
