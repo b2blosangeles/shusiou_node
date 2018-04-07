@@ -86,6 +86,6 @@ var batchDelete = function(list, cbk) {
           _f,
           function(result) {
                cbk(result);
-          }, 30000
+          }, 55000
      )
 }
