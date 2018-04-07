@@ -75,7 +75,7 @@ var batchDelete = function(list, cbk) {
                return function(cbk1) {
                     pkg.fs.unlink(list[i],function(err){
                          cbk1('deleted ' + list[i]);
-			 if ((new Date().getTime() - tm) > 50000) {
+			 if ((new Date().getTime() - tm) > 5) {
 			  CP.exit = 1;
 			 }
                     });
