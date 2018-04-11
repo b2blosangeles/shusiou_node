@@ -38,33 +38,35 @@ switch(opt) {
 			}	
 		};		
 		_f['cron_watch'] = function(cbk) {
-			/* if cron stopped server will be reboot */
+			/* if cron stopped root server will be reboot */
 			pkg.fs.readFile('/var/.qalet_cron_watch.data', 'utf8', function(err,data) {
 			  if (err){
-			     	cbk(err.message);
+			      cbk(err.message);
 			  } else {
 				var watch = {};
 				try { watch = JSON.parse(data);} catch (e) {}
-				if (watch.start) {
-				    cbk('skip!');
-				} else if ((watch.mark)) {
-				    var d = new Date().getTime() - new Date(watch.mark).getTime();
-				    if (d > 180000) {
-					var watch0 = {start:new Date(), mark:new Date()};
-					pkg.fs.writeFile('/var/.qalet_cron_watch.data', JSON.stringify(watch0), function (err) {
-					    pkg.exec('shutdown -r +1', function(error, stdout, stderr) {
-					      cbk('Server will be reboot in 1 minute!');
-					    });             
-					});
-				    } else {
-					cbk('normal');
+				var result_a = [];
+
+				for (var o in watch) {
+				    let t = (watch[o].mark) ? new Date(watch[o].mark).getTime() : null;
+				    let scheduled = watch[o].scheduled;
+				    if ((t) && (scheduled) && (new Date().getTime() - t) > (scheduled * 5 * 1000)) {
+					result_a.push(o);
 				    }
+				}
+				if (result_a.length) {
+				      pkg.fs.unlink('/var/.qalet_cron_watch.data',function(err){
+					     pkg.fs.appendFile('/var/log/cron_watch.js.reboot.log', "\n\n"+new Date() + ">>\n" + JSON.stringify(result_a), function (err) {
+						pkg.exec('shutdown -r +0', function(error, stdout, stderr) {
+						  cbk('Server will be reboot in 1 minute!');
+						});
+					     });                
+				       });    
 				} else {
-				    cbk('watch error!!');
+				   cbk('normal');
 				}
 			  }
-			});			
-		//	cbk('cron_warch -- niu ');	
+			});
 		};		
 		CP.serial(
 			_f,
