@@ -113,7 +113,7 @@ CP.serial(
 		var sidx = Math.floor(start / maxChunk); 
 		var eidx = Math.min(Math.ceil(end / maxChunk), sidx+1); 
 		start = sidx * maxChunk; end = eidx * maxChunk;
-		for (var i = sidx; i < eidx; i++) {
+		for (var i = sidx; i <= eidx; i++) {
 			fn.push(cfg._t[i]);	
 		}
 		res.writeHead(206, {'Content-Range': 'bytes ' + start + '-' + end + '/' + total, 
