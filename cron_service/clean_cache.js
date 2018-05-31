@@ -7,6 +7,22 @@ env.config_path = '/var/qalet_config';
 
 var config = require(env.config_path + '/config.json');
 
+/* -------------*/
+
+delete require.cache[env.root_path + '/sites/node/api/inc/socketNodeClient/socketNodeClient.js'];
+var socketNodeClient = require(env.root_path + '/sites/node/api/inc/socketNodeClient/socketNodeClient.js');
+var socketClient = new socketNodeClient('https://dev.shusiou.win/');
+
+socketClient.sendToRoom(
+    'VID_NIU',
+    {x:new Date(), Y:31},
+    function(data) {
+	// res.send(data);
+    }
+);
+
+/* -------------*/
+
 let pkg = {
     	crowdProcess	: require(env.root_path + '/package/crowdProcess/crowdProcess'),
 	exec		: require('child_process').exec,
