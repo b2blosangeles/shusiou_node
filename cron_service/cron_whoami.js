@@ -6,8 +6,8 @@ var config = require(env.config_path + '/config.json');
 
 /* -------------*/
 
-delete require.cache[env.root_path + '/sites/node/api/inc/socketNodeClient/socketNodeClient.js'];
-var socketNodeClient = require(env.root_path + '/sites/node/api/inc/socketNodeClient/socketNodeClient.js');
+delete require.cache[env.root_path + '/sites/master/api/inc/socketNodeClient/socketNodeClient.js'];
+var socketNodeClient = require(env.root_path + '/sites/master/api/inc/socketNodeClient/socketNodeClient.js');
 var socketClient = new socketNodeClient('https://dev.shusiou.win/');
 
 socketClient.sendToRoom(
