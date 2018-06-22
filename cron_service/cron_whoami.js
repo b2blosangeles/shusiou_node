@@ -8,8 +8,9 @@ var config = require(env.config_path + '/config.json');
 /*
 delete require.cache[env.root_path + '/sites/master/api/inc/socketNodeClient/socketNodeClient.js'];
 var socketNodeClient = require(env.root_path + '/sites/master/api/inc/socketNodeClient/socketNodeClient.js');
-var socketClient = new socketNodeClient('https://dev.shusiou.win/', env);
-
+var socketClient = new socketNodeClient(
+	{link:'https://comm1.service.dev.shusiou.win/'}, 
+	env);
 socketClient.sendToRoom(
     'CRON_REPORT',
     {x:new Date(), Y:30},
