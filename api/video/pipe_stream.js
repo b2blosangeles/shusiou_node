@@ -133,17 +133,7 @@ CP.serial(
 							}).on('end', function() {
 								cbk1(true);
 							});
-					});				
-				
-					/*
-					pkg.request(space_url + space_dir + fn[i], 
-					function (error, response, body) {})
-					.on('data', function(data) {
-						a.write(Buffer.from(data));
-					}).on('end', function() {
-						cbk1(true);
 					});
-					*/
 				}
 			})(i);	
 		}
